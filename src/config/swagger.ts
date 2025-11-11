@@ -38,6 +38,13 @@ const options: swaggerJsdoc.Options = {
                         user: {$ref: "#/components/schemas/User"},
                     },
                 },
+                Project: {
+                    type: "object",
+                    properties: {
+                        name: {type: "string"},
+                        description: {type: "string"},
+                    },
+                }
             },
         },
         security: [{bearerAuth: []}],
