@@ -1,5 +1,7 @@
 import {Router} from "express";
 import {ProjectController} from "./project.controller";
+import {requireAuth} from "../../middlewares/auth.middleware";
+import {UserController} from "../user/user.controller";
 
 const router = Router();
 
@@ -12,7 +14,7 @@ const router = Router();
 
 /**
  * @swagger
- * /project:
+ * /projects:
  *   post:
  *     summary: Create new project
  *     tags: [Project]
@@ -38,7 +40,7 @@ const router = Router();
  *             schema:
  *               $ref: "#/components/schemas/Project"
  */
-router.post("/", ProjectController.create);
+router.post("/", requireAuth, ProjectController.create);
 
 
 export default router;

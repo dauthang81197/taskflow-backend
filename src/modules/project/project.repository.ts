@@ -3,10 +3,11 @@ import {ProjectEntity} from "../../shareds/entities";
 
 export const ProjectRepo =
     AppDataSource.getRepository(ProjectEntity).extend({
-        async createProject(name: string, description: string) {
+        async createProject(name: string, description: string, userId: string) {
             return this.insert({
                 name,
-                description
+                description,
+                owner: {id: userId},
             })
         },
     });
