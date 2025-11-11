@@ -1,7 +1,7 @@
-import {User} from "./user.model";
 import {AppDataSource} from "../../database/ormconfig";
+import {UserEntity} from "../../shareds/entities";
 
-export const UserRepo = AppDataSource.getRepository(User).extend({
+export const UserRepo = AppDataSource.getRepository(UserEntity).extend({
     async findByEmail(email: string) {
         return this.findOne({where: {email}});
     },
