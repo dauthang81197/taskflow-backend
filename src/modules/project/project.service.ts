@@ -3,8 +3,9 @@ import {CommonResponse} from "../../utils/common-response";
 
 
 export class ProjectService {
-    async create(res, name: string, description: string) {
-        const project = await ProjectRepo.createProject(name, description)
+    async create(req, res, name: string, description: string) {
+        const userId = req.user?.id;
+        const project = await ProjectRepo.createProject(name, description, userId)
 
         return CommonResponse.success(res, project, "Task created successfully", 201)
     }
