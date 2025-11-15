@@ -27,10 +27,10 @@ const router = Router();
  *             properties:
  *               email:
  *                 type: string
- *                 example: "user@example.com"
+ *                 example: "thangdau811@gmail.com"
  *               password:
  *                 type: string
- *                 example: "123456"
+ *                 example: "Admin@123"
  *               name:
  *                 type: string
  *     responses:
@@ -59,10 +59,10 @@ router.post("/register", AuthController.register);
  *             properties:
  *               email:
  *                 type: string
- *                 example: "user@example.com"
+ *                 example: "thangdau811@gmail.com"
  *               password:
  *                 type: string
- *                 example: "123456"
+ *                 example: "Admin@123"
  *     responses:
  *       200:
  *         description: Login success
@@ -107,7 +107,7 @@ router.post("/logout", AuthController.logout);
  *       302:
  *         description: Redirect to Google OAuth2 consent screen
  */
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/google", passport.authenticate("google", {scope: ["profile", "email"]}));
 
 /**
  * @swagger
@@ -121,7 +121,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
  */
 router.get(
     "/google/callback",
-    passport.authenticate("google", { session: false, failureRedirect: "/auth-failed" }),
+    passport.authenticate("google", {session: false, failureRedirect: "/auth-failed"}),
     (req, res) => res.redirect("/auth-success")
 );
 
