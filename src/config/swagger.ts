@@ -1,6 +1,6 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import {Express} from "express";
+import { Express } from "express";
 
 const options: swaggerJsdoc.Options = {
     definition: {
@@ -49,7 +49,7 @@ const options: swaggerJsdoc.Options = {
         },
         security: [{bearerAuth: []}],
     },
-    apis: ["src/modules/**/*.routes.ts"], // tự động scan các route có @swagger
+    apis: ["src/modules/**/*.routes.ts"],
 };
 const swaggerSpec = swaggerJsdoc(options);
 

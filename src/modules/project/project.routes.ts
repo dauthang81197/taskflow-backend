@@ -1,7 +1,7 @@
-import {Router} from "express";
-import {ProjectController} from "./project.controller";
-import {requireAuth} from "../../middlewares/auth.middleware";
-import {UserController} from "../user/user.controller";
+import { Router } from "express";
+import { ProjectController } from "./project.controller";
+import { requireAuth } from "../../middlewares/auth.middleware";
+import { UserController } from "../user/user.controller";
 
 const router = Router();
 
@@ -41,6 +41,103 @@ const router = Router();
  *               $ref: "#/components/schemas/Project"
  */
 router.post("/", requireAuth, ProjectController.create);
+
+/**
+ * @swagger
+ * /projects:
+ *   put:
+ *     summary: Create new project
+ *     tags: [Project]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the project to update
+ *         example: "a1b2c3d4"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [name, description]
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Project A"
+ *               description:
+ *                 type: string
+ *                 example: "Project A"
+ *     responses:
+ *       200:
+ *         description: Project update success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Project"
+ */
+router.put("/:id", requireAuth, ProjectController.update);
+
+/**
+ * @swagger
+ * /projects/{id}:
+ *   get:
+ *     summary: Get project detail
+ *     description: Retrieve detailed information of a specific project by its ID.
+ *     tags: [Project]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the project to retrieve
+ *         example: "54bffccd-9a30-4ed2-ac4e-4ffbe4eaaaba"
+ *     responses:
+ *       200:
+ *         description: Project detail fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Project"
+ *       404:
+ *         description: Project not found
+ *       401:
+ *         description: Unauthorized - authentication required
+ */
+router.get("/:id", requireAuth, ProjectController.detail);
+
+
+/**
+ * @swagger
+ * /projects/{id}:
+ *   delete:
+ *     summary: Delete Project
+ *     description: Retrieve detailed information of a specific project by its ID.
+ *     tags: [Project]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The unique ID of the project to retrieve
+ *         example: "54bffccd-9a30-4ed2-ac4e-4ffbe4eaaaba"
+ *     responses:
+ *       200:
+ *         description: Project detail fetched successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Project"
+ *       404:
+ *         description: Project not found
+ *       401:
+ *         description: Unauthorized - authentication required
+ */
+router.get("/:id", requireAuth, ProjectController.delete);
 
 
 export default router;
