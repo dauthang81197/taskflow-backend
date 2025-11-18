@@ -17,12 +17,11 @@ export class CommonResponse {
         });
     }
 
-    static paginated(res, data = [], pagination = {}, message = "Success") {
+    static paginated(res, data: {}, message = "Success") {
         return res.status(200).json({
             success: true,
             message,
-            data,
-            pagination, // { page, limit, total }
+            ...data,
         });
     }
 }

@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {ProjectController} from "./project.controller";
+import {TaskController} from "./task.controller";
 import {requireAuth} from "../../middlewares/auth.middleware";
 import {UserController} from "../user/user.controller";
 
@@ -14,24 +14,33 @@ const router = Router();
 
 /**
  * @swagger
- * /projects:
+ * /tasks:
  *   post:
  *     summary: Create new project
- *     tags: [Project]
+ *     tags: [Task]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
- *             required: [name, description]
+ *             required: [title, description, status, priority, dueDate, userId, projectId]
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Project A"
+ *                 example: "Task A"
  *               description:
  *                 type: string
- *                 example: "Project A"
+ *                 example: "Task A"
+ *               priority:
+ *                 type: string
+ *                 example: "HIGH"
+ *               dueDate:
+ *                 type: date
+ *                 example: "2025-11-10 05:04:52.657"
+ *               projectId:
+ *                 type: string
+ *                 example: new Date()
  *     responses:
  *       200:
  *         description: Project create success
@@ -40,14 +49,14 @@ const router = Router();
  *             schema:
  *               $ref: "#/components/schemas/Project"
  */
-router.post("/", requireAuth, ProjectController.create);
+router.post("/", requireAuth, TaskController.create);
 
 /**
  * @swagger
- * /projects:
+ * /tasks:
  *   put:
  *     summary: Create new project
- *     tags: [Project]
+ *     tags: [task]
  *     parameters:
  *       - in: path
  *         name: id
@@ -78,15 +87,15 @@ router.post("/", requireAuth, ProjectController.create);
  *             schema:
  *               $ref: "#/components/schemas/Project"
  */
-router.put("/:id", requireAuth, ProjectController.update);
+router.put("/:id", requireAuth, TaskController.update);
 
 /**
  * @swagger
- * /projects/{id}:
+ * /tasks/{id}:
  *   get:
  *     summary: Get project detail
  *     description: Retrieve detailed information of a specific project by its ID.
- *     tags: [Project]
+ *     tags: [Task]
  *     parameters:
  *       - in: path
  *         name: id
@@ -107,16 +116,16 @@ router.put("/:id", requireAuth, ProjectController.update);
  *       401:
  *         description: Unauthorized - authentication required
  */
-router.get("/:id", requireAuth, ProjectController.detail);
+router.get("/:id", requireAuth, TaskController.detail);
 
 
 /**
  * @swagger
- * /projects/{id}:
+ * /tasks/{id}:
  *   delete:
  *     summary: Delete Project
  *     description: Retrieve detailed information of a specific project by its ID.
- *     tags: [Project]
+ *     tags: [Task]
  *     parameters:
  *       - in: path
  *         name: id
@@ -137,15 +146,15 @@ router.get("/:id", requireAuth, ProjectController.detail);
  *       401:
  *         description: Unauthorized - authentication required
  */
-router.get("/:id", requireAuth, ProjectController.delete);
+router.get("/:id", requireAuth, TaskController.delete);
 
 /**
  * @swagger
- * /projects:
+ * /tasks:
  *   get:
  *     summary: Get project detail
  *     description: Retrieve detailed information of a specific project by its ID.
- *     tags: [Project]
+ *     tags: [Task]
  *     parameters:
  *       - in: query
  *         name: page
@@ -173,7 +182,7 @@ router.get("/:id", requireAuth, ProjectController.delete);
  *       401:
  *         description: Unauthorized - authentication required
  */
-router.get("/", requireAuth, ProjectController.getMyProject);
+router.get("/", requireAuth, TaskController.getMyProject);
 
 
 export default router;
