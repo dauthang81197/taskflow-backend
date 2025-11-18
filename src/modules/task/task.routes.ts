@@ -1,7 +1,7 @@
-import {Router} from "express";
-import {TaskController} from "./task.controller";
-import {requireAuth} from "../../middlewares/auth.middleware";
-import {UserController} from "../user/user.controller";
+import { Router } from "express";
+import { TaskController } from "./task.controller";
+import { requireAuth } from "../../middlewares/auth.middleware";
+import { UserController } from "../user/user.controller";
 
 const router = Router();
 
@@ -26,7 +26,7 @@ const router = Router();
  *             type: object
  *             required: [title, description, status, priority, dueDate, userId, projectId]
  *             properties:
- *               name:
+ *               title:
  *                 type: string
  *                 example: "Task A"
  *               description:
@@ -37,10 +37,10 @@ const router = Router();
  *                 example: "HIGH"
  *               dueDate:
  *                 type: date
- *                 example: "2025-11-10 05:04:52.657"
+ *                 example: "2025-11-10T05:04:52.657Z"
  *               projectId:
  *                 type: string
- *                 example: new Date()
+ *                 example: "54bffccd-9a30-4ed2-ac4e-4ffbe4eaaaba"
  *     responses:
  *       200:
  *         description: Project create success
@@ -182,7 +182,7 @@ router.get("/:id", requireAuth, TaskController.delete);
  *       401:
  *         description: Unauthorized - authentication required
  */
-router.get("/", requireAuth, TaskController.getMyProject);
+router.get("/", requireAuth, TaskController.getMyTasks);
 
 
 export default router;

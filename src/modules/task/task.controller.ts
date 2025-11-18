@@ -1,11 +1,11 @@
-import {Request, Response} from "express";
-import {CreateTaskSchema} from "./task.schema";
-import {taskService} from "./task.service";
-import {CreateProjectSchema} from "../project/project.schema";
+import { Request, Response } from "express";
+import { CreateTaskSchema } from "./task.schema";
+import { taskService } from "./task.service";
+import { CreateProjectSchema } from "../project/project.schema";
 
 export const TaskController = {
-    getTask: async (req: Request, res: Response) => {
-        return await taskService.getProject(req, res);
+    getMyTasks: async (req: Request, res: Response) => {
+        return await taskService.getTasks(req, res);
     },
     create: async (req: Request, res: Response) => {
         const body = CreateTaskSchema.parse(req.body);
@@ -13,8 +13,8 @@ export const TaskController = {
     },
     update: async (req: Request, res: Response) => {
         const {id} = req.params
-        const {name, description} = CreateProjectSchema.parse(req.body);
-        return await taskService.update(req, res, id, name, description);
+        const body = CreateTaskSchema.parse(req.body);
+        return await taskService.update(req, res, id, body);
     },
     delete: async (req: Request, res: Response) => {
         const {id} = req.params

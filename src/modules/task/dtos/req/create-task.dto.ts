@@ -1,9 +1,9 @@
-import {z} from "zod/index";
+import { z } from "zod/index";
 
 export class CreateTaskDto {
     description: string;
     title: string;
     priority: string;
-    dueDate: Date;
+    dueDate: string;
     projectId: string;
 }
