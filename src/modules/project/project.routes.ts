@@ -1,7 +1,7 @@
-import {Router} from "express";
-import {ProjectController} from "./project.controller";
-import {requireAuth} from "../../middlewares/auth.middleware";
-import {UserController} from "../user/user.controller";
+import { Router } from "express";
+import { ProjectController } from "./project.controller";
+import { requireAuth } from "../../middlewares/auth.middleware";
+import { UserController } from "../user/user.controller";
 
 const router = Router();
 
@@ -143,7 +143,7 @@ router.get("/:id", requireAuth, ProjectController.delete);
  * @swagger
  * /projects:
  *   get:
- *     summary: Get project detail
+ *     summary: Get my project
  *     description: Retrieve detailed information of a specific project by its ID.
  *     tags: [Project]
  *     parameters:

@@ -1,12 +1,12 @@
-import {TaskRepository} from "./task.repository";
-import {CommonResponse} from "../../utils/common-response";
-import {Transactional} from "../../utils/transactions/transaction";
-import {IsolationLevelEnum} from "../../utils/transactions/wrap-in-transaction";
-import {AppDataSource} from "../../database/ormconfig";
-import {NotFoundException, ValidationException} from '../../exceptions';
-import {TaskQueryReqDto} from "./dtos/req/task-query.req.dto";
-import {CreateTaskDto} from "./dtos/req/create-task.dto";
-import {ProjectRepository} from "../project/project.repository";
+import { TaskRepository } from "./task.repository";
+import { CommonResponse } from "../../utils/common-response";
+import { Transactional } from "../../utils/transactions/transaction";
+import { IsolationLevelEnum } from "../../utils/transactions/wrap-in-transaction";
+import { AppDataSource } from "../../database/ormconfig";
+import { NotFoundException, ValidationException } from '../../exceptions';
+import { TaskQueryReqDto } from "./dtos/req/task-query.req.dto";
+import { CreateTaskDto } from "./dtos/req/create-task.dto";
+import { ProjectRepository } from "../project/project.repository";
 
 export class TaskService {
     constructor(private readonly dataSource = AppDataSource,
@@ -22,39 +22,37 @@ export class TaskService {
         return CommonResponse.success(
             res,
             project,
-            "Project created successfully",
+            "Task created successfully",
             201
         );
     }
 
-    async update(req, res, id, name: string, description: string) {
+    async update(req, res, id, body: CreateTaskDto) {
         const userId = req.user?.id;
-        const project = await this.taskRepo.updateTask(id, name, description);
+        const project = await this.taskRepo.updateTask(id, body);
 
         return CommonResponse.success(
             res,
             project,
-            "Project updated successfully",
+            "Task updated successfully",
             201
         );
     }
 
     async delete(req, res, id: string) {
         const userId = req.user?.id;
-        const project = await this.taskRepo.getDetailTask(id);
-        if (!project) {
+        const task = await this.taskRepo.getDetailTask(id);
+        if (!task) {
             throw new NotFoundException()
         }
-        if (project?.tasks?.length > 0) {
-            throw new ValidationException()
-        }
+
 
         await this.taskRepo.deleteTask(id);
 
         return CommonResponse.success(
             res,
-            project,
-            "Project updated successfully",
+            task,
+            "Task deleted successfully",
             200
         );
     }
@@ -67,13 +65,13 @@ export class TaskService {
         return CommonResponse.success(
             res,
             project,
-            "Project detail",
+            "Task detail",
             200
         );
     }
 
 
-    async getProject(req, res) {
+    async getTasks(req, res) {
         const userId = req.user?.id;
         const {page, limit} = req.query
         const query = new TaskQueryReqDto()
@@ -81,16 +79,17 @@ export class TaskService {
         query.page = page;
         const project = await this.taskRepo.getTasks(userId, query);
 
+        // @ts-ignore
         return CommonResponse.paginated(
             res,
             project,
-            'Project list'
+            'Task list'
         );
     }
 
-    async private _validateProject(projectId: string) {
+    private async _validateProject(projectId: string) {
         const project = await this.projectRepo.getDetailProject(projectId);
-        if(!project) {
+        if (!project) {
             throw new NotFoundException()
         }
     }

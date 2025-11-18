@@ -1,9 +1,9 @@
-import {EntityManager} from "typeorm";
-import {ProjectEntity, TaskEntity} from "../../shareds/entities";
-import {TypeORMRepository} from '../../common/base-repository';
-import {TaskQueryReqDto} from './dtos/req/task-query.req.dto';
-import {CreateTaskDto} from "./dtos/req/create-task.dto";
-import {StatusTaskEnum} from "./task.enum";
+import { EntityManager } from "typeorm";
+import { ProjectEntity, TaskEntity } from "../../shareds/entities";
+import { TypeORMRepository } from '../../common/base-repository';
+import { TaskQueryReqDto } from './dtos/req/task-query.req.dto';
+import { CreateTaskDto } from "./dtos/req/create-task.dto";
+import { StatusTaskEnum } from "./task.enum";
 
 export class TaskRepository extends TypeORMRepository<TaskEntity> {
     constructor(manager?: EntityManager) {
@@ -22,10 +22,13 @@ export class TaskRepository extends TypeORMRepository<TaskEntity> {
         });
     }
 
-    async updateTask(id: string, name: string, description: string) {
+    async updateTask(id: string, body: CreateTaskDto) {
         return this.repo.update(id, {
-            name,
-            description,
+            title: body.title,
+            dueDate: body.dueDate,
+            status: StatusTaskEnum.TODO,
+            description: body.description,
+            priority: body.priority,
         });
     }
 
@@ -33,19 +36,19 @@ export class TaskRepository extends TypeORMRepository<TaskEntity> {
         return this.repo.delete(id);
     }
 
-    async getDetailTask(id: string): Promise<ProjectEntity> {
+    async getDetailTask(id: string): Promise<TaskEntity> {
         return this.repo.findOne({
             where: {id},
             select: {
                 id: true,
-                name: true,
+                title: true,
                 description: true,
-                owner: {id: true, name: true},
-                tasks: {id: true, title: true},
+                status: true,
+                priority: true,
+                assignee: {id: true, name: true},
             },
             relations: {
-                owner: true,
-                tasks: true,
+                assignee: true,
             },
         });
     }
@@ -62,7 +65,7 @@ export class TaskRepository extends TypeORMRepository<TaskEntity> {
                 "u.id",
                 "u.name",
             ])
-            .leftJoin("p.owner", "u");
+            .leftJoin("t.assignee", "u");
 
         if (userId) {
             qb.andWhere("u.id = :userId", {userId});
