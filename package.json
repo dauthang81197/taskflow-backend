@@ -15,8 +15,9 @@
     "migrate:create": "ts-node ./src/scripts/create-migration.ts",
     "migrate:generate": "ts-node ./src/scripts/generate-migration.ts",
     "seed:run": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d src/database/ormconfig.ts",
-    "prepare": "husky",
-    "pre-commit": "lint-staged"
+    "prepare": "if [ \"$HUSKY\" != \"0\" ]; then husky; fi",
+    "pre-commit": "lint-staged",
+    "postinstall": "if [ \"${HUSKY}\" != \"0\" ]; then husky install; fi"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

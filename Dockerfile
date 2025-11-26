@@ -1,4 +1,4 @@
-FROM node:23-alpine AS builder
+FROM node:22 AS builder
 
 WORKDIR /app
 
@@ -10,11 +10,13 @@ COPY . .
 
 RUN npm run build
 
-FROM node:23-alpine
+FROM node:22
 
 WORKDIR /app
 
 COPY package*.json ./
+
+ENV HUSKY=0 
 
 RUN npm install --omit=dev
 

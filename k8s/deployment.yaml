@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taskflow-backend-dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: taskflow-backend-dev
+  template:
+    metadata:
+      labels:
+        app: taskflow-backend-dev
+    spec:
+      containers:
+        - name: taskflow-backend-dev
+          image: dauthang811/taskflow-backend:dev
+          ports:
+            - containerPort: 8000
