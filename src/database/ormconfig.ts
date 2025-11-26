@@ -3,11 +3,11 @@ import { DataSource, DataSourceOptions } from "typeorm";
 import * as dotenv from "dotenv";
 import path from "path";
 import logger from "../config/logger";
-
+import { SeederOptions } from "typeorm-extension";
 dotenv.config();
 
 // 👇 Config TypeORM
-const connectionOptions: DataSourceOptions = {
+const connectionOptions: DataSourceOptions & SeederOptions = {
   type: "postgres",
   host: process.env.DB_HOST || "localhost",
   port: Number(process.env.DB_PORT) || 5432,
@@ -23,7 +23,7 @@ const connectionOptions: DataSourceOptions = {
   ],
 
   migrations: [path.resolve(__dirname, "./migrations/*.{ts,js}")],
-
+  seeds: [path.resolve(__dirname, "database/seeds/*.seeder.{ts,js}")],
   migrationsTableName: "migrations",
 };
 

@@ -1,8 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-
-const bool = (v: any) => `${v}`.toLowerCase() === "true";
+const bool = (v: string) => `${v}`.toLowerCase() === "true";
 
 export const config = {
   env: process.env.NODE_ENV || "development",

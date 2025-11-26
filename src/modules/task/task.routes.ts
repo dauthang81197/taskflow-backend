@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { TaskController } from "./task.controller";
 import { requireAuth } from "../../middlewares/auth.middleware";
-import { UserController } from "../user/user.controller";
 
 const router = Router();
 
@@ -118,7 +117,6 @@ router.put("/:id", requireAuth, TaskController.update);
  */
 router.get("/:id", requireAuth, TaskController.detail);
 
-
 /**
  * @swagger
  * /tasks/{id}:
@@ -183,6 +181,5 @@ router.get("/:id", requireAuth, TaskController.delete);
  *         description: Unauthorized - authentication required
  */
 router.get("/", requireAuth, TaskController.getMyTasks);
-
 
 export default router;

@@ -8,12 +8,12 @@ export function Transactional(options?: {
   const { isolation = IsolationLevelEnum.READ_COMMITTED, dataSource } =
     options || {};
   return function (
-    target: any,
+    target: unknown,
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) {
     const originalMethod = descriptor.value;
-    descriptor.value = async function (...args: any[]) {
+    descriptor.value = async function (...args) {
       const ds: DataSource = dataSource || this.dataSource;
       if (!ds)
         throw new Error(
