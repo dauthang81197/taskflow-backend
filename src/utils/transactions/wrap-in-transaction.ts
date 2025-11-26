@@ -18,15 +18,18 @@ export async function wrapInTransaction<T>(
     try {
       const result = await dataSource.transaction(isolation, fn);
       return result;
-    } catch (error: any) {
+    } catch (error: unknown) {
       if (
         isolation === "SERIALIZABLE" &&
+        error instanceof Error &&
         error.message.includes("could not serialize access") &&
         attempt < maxRetries
       ) {
         console.warn(`Retrying transaction (${attempt}/${maxRetries})...`);
         continue;
       }
+
+      // Rethrow original error
       throw error;
     }
   }

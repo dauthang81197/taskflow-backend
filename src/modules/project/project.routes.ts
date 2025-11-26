@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { ProjectController } from "./project.controller";
 import { requireAuth } from "../../middlewares/auth.middleware";
-import { UserController } from "../user/user.controller";
 
 const router = Router();
 
@@ -109,7 +108,6 @@ router.put("/:id", requireAuth, ProjectController.update);
  */
 router.get("/:id", requireAuth, ProjectController.detail);
 
-
 /**
  * @swagger
  * /projects/{id}:
@@ -174,6 +172,5 @@ router.get("/:id", requireAuth, ProjectController.delete);
  *         description: Unauthorized - authentication required
  */
 router.get("/", requireAuth, ProjectController.getMyProject);
-
 
 export default router;

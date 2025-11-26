@@ -6,7 +6,11 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
+    ignores: ["dist/**", "node_modules/**"],
+  },
+  {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    ignores: ["dist/**"],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -20,6 +24,7 @@ export default defineConfig([
     rules: {
       "no-console": "off",
       "no-unused-vars": "warn",
+      "@typescript-eslint/no-explicit-any": "off",
     },
   },
   js.configs.recommended,
